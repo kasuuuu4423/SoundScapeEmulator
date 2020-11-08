@@ -1,0 +1,68 @@
+body{
+    margin: 0;
+}
+#sse{
+    display: flex;
+    $padding: 5px;
+    width: calc(100% - #{$padding} * 2);
+    height: calc(100vh - #{$padding} * 2);
+    #names{
+        width: 50%;
+        height: 100%;
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        padding: $padding;
+        justify-content: space-between;
+        align-content: flex-start;
+        .name{
+            padding: 5px 10px;
+            background: #191919;
+            color: #fff;
+            margin: 2px;
+            border-radius: 3px;
+            width: calc(30% - 20px);
+            text-align: center;
+            @media (max-width: 750px){
+                width: calc(49% - 25px);
+            }
+            cursor: pointer;
+            &:hover{
+                opacity: 0.7;
+            }
+        }
+    }
+    #players{
+        width: 50%;
+        height: 100%;
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        padding: $padding;
+        .player{
+            height: fit-content;
+            width: 33%;
+            @media (max-width: 750px){
+                width: 49%;
+            }
+            margin-top: 5px;
+            margin-bottom: 5px;
+            background: #191919;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            *{
+                width: 100%;
+            }
+            audio{
+                $audio_margin: 4px;
+                margin: 0px $audio_margin;
+                width: calc(100% - #{$audio_margin} * 2);
+            }
+            button{
+                cursor: pointer;
+            }
+        }
+    }
+}
