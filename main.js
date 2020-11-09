@@ -4,6 +4,62 @@ const BrowserWindow = electron.BrowserWindow;
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 
+const shuffle = ([...array]) => {
+    for (let i = array.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+const remove_fileName = (directory) =>{
+    let dir = directory.split('/');
+    let flg_dir = false;
+    if(dir[1] == undefined){
+        dir = dir[0].split("\\");
+        flg_dir = true;
+    }
+    dir.pop();
+    if(flg_dir){
+        return dir.join('\\');
+    }
+    else{
+        return dir.join('/');
+    }
+}
+
+const create_audioList = () =>{
+    let root_dir = app.getPath('exe');
+    root_dir = remove_fileName(root_dir);
+    let list_dir = __dirname + '\\src\\js\\sse\\assets\\';
+    console.log(list_dir);
+    let list = fs.readdirSync(list_dir + 'audio\\');
+    let flg_list = true;
+    // for(let i = list.length - 1; i > 0; i--){
+    //     let r = Math.floor(Math.random*(i+1));
+    //     let tmp = list[i];
+    //     list[i] = list[r];
+    //     list[r] = tmp;
+    // }
+    list = shuffle(list);
+    console.log(list);
+    for(let i = 0; i < list.length; i++){
+        if(typeof(list[i]) == 'string'){
+            let audio = list[i].split('.')[0];
+            if(flg_list){
+                fs.writeFileSync(list_dir + "list.csv", audio + '\n');
+                flg_list = false;
+            }
+            else{
+                fs.appendFile(list_dir + "/list.csv", audio + '\n', (err) => {
+                    if (err) throw err;
+                });
+            }
+        }
+    }
+}
+
+create_audioList();
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -15,7 +71,7 @@ function createWindow () {
     });
 
     win.loadFile('src/index.html');
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 }
 
 //※※※※※※※※※※※※※※※※ここから※※※※※※※※※※※※※※※※※※※
@@ -37,14 +93,6 @@ function createWindow () {
 //     }
 // });
 //※※※※※※※※※※※※※※※※ここまでauto reload※※※※※※※※※※※※※※※※※※※
-
-
-
-// fs.writeFileSync("./test.csv", 'hello');
-// fs.appendFile('./test.csv', 'append!\n', (err) => {
-//     if (err) throw err;
-//     console.log('test.txtに追記されました');
-// });
 
 app.whenReady().then(createWindow);
 
@@ -72,5 +120,12 @@ ipcMain.on('message', (event, arg) => {
         fs.appendFile("./action.csv", arg + '\n', (err) => {
             if (err) throw err;
         });
+    }
+});
+
+ipcMain.on('status', (e, arg) => {
+    console.log(arg);
+    if(arg == 'ready'){
+        e.sender.send('root', app.getPath('exe'));
     }
 });
