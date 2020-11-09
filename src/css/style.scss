@@ -42,7 +42,7 @@ body{
         padding: $padding;
         .player{
             height: fit-content;
-            width: 33%;
+            width: calc(33% - 4px);
             @media (max-width: 750px){
                 width: 49%;
             }
@@ -52,6 +52,7 @@ body{
             color: #fff;
             text-align: center;
             border-radius: 3px;
+            border: solid 2px #191919;
             *{
                 width: 100%;
             }
@@ -62,6 +63,13 @@ body{
             }
             button{
                 cursor: pointer;
+                border-radius: 0px;
+                border: none;
+            }
+            input{
+                box-sizing: border-box;
+                margin-bottom: 5.5px;
+                transform: translateY(-3px);
             }
         }
     }
