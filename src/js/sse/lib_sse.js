@@ -32,7 +32,7 @@ export default class SSE{
         csvInstance.request.addEventListener('load', (e)=>{
             this.names = csvInstance.data;
             for(let i = 0; i < this.names.length && i < maxNum; i++){
-                this.MN.addName(this.names[i][0]);
+                this.MN.addName(this.names[i][0], this.names[i][1]);
             }
         });
     }
@@ -54,7 +54,8 @@ export default class SSE{
         let data_name = target.getAttribute('data-name');
         let data_num = target.getAttribute('data-num');
         let text = target.innerHTML;
-        this.MP.addPlayer(data_name, data_num, text);
+        let extension = target.getAttribute('data-extension');
+        this.MP.addPlayer(data_name, data_num, text, extension);
         ipcRenderer.send('message', 'add,' + data_name + ',' + this.time.now());
     }
     click_event_remove(target){

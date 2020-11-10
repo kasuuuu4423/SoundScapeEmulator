@@ -8,8 +8,8 @@ export default class Manage_Names{
     constructor(){
         this.wrap_names = document.getElementById('names');
     }
-    addName(name){
-        let obj_name = new AudioNames(name, this.crnt_num);
+    addName(name, extension){
+        let obj_name = new AudioNames(name, this.crnt_num, extension);
         this.names.push([obj_name.name, obj_name.nameText, this.crnt_num]);
         this.wrap_names.appendChild(obj_name.name);
         this.crnt_num++;

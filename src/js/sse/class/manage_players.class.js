@@ -10,8 +10,8 @@ export default class Manage_player{
         this.config = new Config();
         this.util = new Util();
     }
-    addPlayer(name, num, text){
-        let src = this.config.root + '/assets/audio/' + name + '.mp3';
+    addPlayer(name, num, text, extension){
+        let src = this.config.root + '/assets/audio/' + name + '.' + extension;
         let player = new AudioPlayer(src, name, num, text);
         // this.players.push([player.player, player.uniqueName, player.num]);
         this.players.push(player);

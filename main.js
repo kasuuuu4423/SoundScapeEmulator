@@ -59,12 +59,13 @@ const create_audioList = () =>{
     for(let i = 0; i < list.length; i++){
         if(typeof(list[i]) == 'string'){
             let audio = list[i].split('.')[0];
+            let ex = list[i].split('.')[1];
             if(flg_list){
-                fs.writeFileSync(list_dir + "list.csv", audio + '\n');
+                fs.writeFileSync(list_dir + "list.csv", audio + ',' + ex + '\n');
                 flg_list = false;
             }
             else{
-                fs.appendFile(list_dir + "/list.csv", audio + '\n', (err) => {
+                fs.appendFile(list_dir + "/list.csv", audio + ',' + ex + '\n', (err) => {
                     if (err) throw err;
                 });
             }
