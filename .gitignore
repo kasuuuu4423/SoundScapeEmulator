@@ -3,3 +3,4 @@ node_modules/
 src/js/sse/assets/audio/
 dist/
 src/js/sse/assets/list.csv
+release-builds

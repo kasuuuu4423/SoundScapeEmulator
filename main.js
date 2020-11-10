@@ -4,6 +4,9 @@ const BrowserWindow = electron.BrowserWindow;
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 
+const is_windows = process.platform==='win32'
+const is_mac = process.platform==='darwin'
+
 const shuffle = ([...array]) => {
     for (let i = array.length - 1; i >= 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -31,9 +34,19 @@ const remove_fileName = (directory) =>{
 const create_audioList = () =>{
     let root_dir = app.getPath('exe');
     root_dir = remove_fileName(root_dir);
-    let list_dir = __dirname + '\\src\\js\\sse\\assets\\';
+    let tmp_dir = "";
+    let tmp_dir_audio = "";
+    if(is_mac){
+        tmp_dir = '/src/js/sse/assets/'
+        tmp_dir_audio = 'audio/'
+    }
+    else if(is_windows){
+        tmp_dir = '\\src\\js\\sse\\assets\\';
+        tmp_dir_audio = 'audio\\';
+    }
+    let list_dir = __dirname + tmp_dir;
     console.log(list_dir);
-    let list = fs.readdirSync(list_dir + 'audio\\');
+    let list = fs.readdirSync(list_dir + tmp_dir_audio);
     let flg_list = true;
     // for(let i = list.length - 1; i > 0; i--){
     //     let r = Math.floor(Math.random*(i+1));
@@ -110,14 +123,19 @@ app.on('activate', () => {
 
 let flg_writeCSV = true;
 ipcMain.on('message', (event, arg) => {
+    let dir = "";
+    if(is_mac){
+        dir = __dirname;
+        dir = remove_fileName(dir);
+    }
     console.log(arg);
     //let action = arg.split(',')[0];
     if(flg_writeCSV){
-        fs.writeFileSync("./action.csv", arg + '\n');
+        fs.writeFileSync(dir + "/action.csv", arg + '\n');
         flg_writeCSV = false;
     }
     else{
-        fs.appendFile("./action.csv", arg + '\n', (err) => {
+        fs.appendFile(dir + "/action.csv", arg + '\n', (err) => {
             if (err) throw err;
         });
     }
