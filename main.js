@@ -36,24 +36,24 @@ const create_audioList = () =>{
     root_dir = remove_fileName(root_dir);
     let tmp_dir = "";
     let tmp_dir_audio = "";
+    let list_dir = "";
     if(is_mac){
         tmp_dir = '/src/js/sse/assets/'
         tmp_dir_audio = 'audio/'
+        list_dir = __dirname + tmp_dir;
     }
     else if(is_windows){
         tmp_dir = '\\src\\js\\sse\\assets\\';
         tmp_dir_audio = 'audio\\';
+        root_dir = remove_fileName(root_dir);
+        root_dir = remove_fileName(root_dir);
+        root_dir = remove_fileName(root_dir);
+        list_dir = root_dir + tmp_dir;
+        console.log(list_dir);
     }
-    let list_dir = __dirname + tmp_dir;
     console.log(list_dir);
     let list = fs.readdirSync(list_dir + tmp_dir_audio);
     let flg_list = true;
-    // for(let i = list.length - 1; i > 0; i--){
-    //     let r = Math.floor(Math.random*(i+1));
-    //     let tmp = list[i];
-    //     list[i] = list[r];
-    //     list[r] = tmp;
-    // }
     list = shuffle(list);
     console.log(list);
     for(let i = 0; i < list.length; i++){
