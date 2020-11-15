@@ -3,7 +3,8 @@ export default class Time{
     constructor(){
     }
     now(){
-        this.date = new Date();
-        return (this.date.getMonth() + 1) + '/' + this.date.getDate() + ',' + this.date.getHours() + ':' + this.date.getMinutes() + ':' + this.date.getSeconds();
+        //this.date = new Date();
+        //return (this.date.getMonth() + 1) + '/' + this.date.getDate() + ',' + this.date.getHours() + ':' + this.date.getMinutes() + ':' + this.date.getSeconds();
+        return performance.now();
     }
 }

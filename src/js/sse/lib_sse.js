@@ -7,7 +7,7 @@ import Time from './class/time.class.js';
 const { ipcRenderer } = require('electron');
 
 export default class SSE{
-    players;audioNames = [];csv;csvData;MN;MP;names;wrap;config;util;time;
+    players;audioNames = [];csv;csvData;MN;MP;names;wrap;config;util;time;startTime;
     constructor(maxNum){
         this.wrap = this.addWrappers(document.getElementById('sse'));
         this.config = new Config();
@@ -18,6 +18,7 @@ export default class SSE{
         this.time = new Time();
         this.csv_event(this.csv, maxNum);
         this.click_event();
+        this.startTime = this.time.now();
     }
     addWrappers(wrap){
         let names = document.createElement('div');
@@ -56,12 +57,16 @@ export default class SSE{
         let text = target.innerHTML;
         let extension = target.getAttribute('data-extension');
         this.MP.addPlayer(data_name, data_num, text, extension);
-        ipcRenderer.send('message', 'add,' + data_name + ',' + this.time.now());
+        let now = this.time.now();
+        let progTime = now - this.startTime;
+        ipcRenderer.send('message', 'add,' + data_name + ',' + progTime);
     }
     click_event_remove(target){
         let data_name = target.getAttribute('data-name');
         let name = this.MP.removePlayer(data_name);
-        ipcRenderer.send('message', 'remove,' + name + ',' + this.time.now());
+        let now = this.time.now();
+        let progTime = now - this.startTime;
+        ipcRenderer.send('message', 'remove,' + name + ',' + progTime);
     }
     click_event_rename(target){
         let data_num = target.getAttribute('data-num');
@@ -70,7 +75,9 @@ export default class SSE{
             let text = this.MP.change_text(data_name, data_num);
             this.MN.change_text(data_num, text[0]);
             target.classList.remove('change');
-            ipcRenderer.send('message', 'rename,' + text[1] + ',' + this.time.now() + ',' + text[0]);
+            let now = this.time.now();
+            let progTime = now - this.startTime;
+            ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
         }
         else{
             this.MP.change_input(data_name);
