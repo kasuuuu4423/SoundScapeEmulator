@@ -40,7 +40,7 @@ export default class SSE{
     click_event(){
         document.addEventListener('click', (e)=>{
             let class_target = e.target.classList;
-            if(class_target[0] === 'name'){
+            if(class_target[0] === 'btn_add'){
                 this.click_event_name(e.target);
             }
             else if(class_target[0] === 'btn_remove'){
@@ -86,7 +86,7 @@ export default class SSE{
             ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
         }
         else{
-            this.MP.change_input(data_name);
+            this.MN.change_input(data_name);
             target.classList.add('change');
         }
     }

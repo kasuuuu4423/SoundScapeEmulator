@@ -22,4 +22,11 @@ export default class Manage_Names{
             }
         }
     }
+    change_input(name){
+        for(let i = 0; i < this.names.length; i++){
+            if(this.names[i].nameText == name){
+                this.name[i].name;
+            }
+        }
+    }
 }
