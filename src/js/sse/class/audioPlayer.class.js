@@ -2,12 +2,13 @@ import Util from './util.class.js';
 import Volume from './volume.class.js';
 
 export default class AudioPlayer{
-    player;audio;valume;
+    player;audio;volume;
     uniqueName;num;util;name;
 
     constructor(src, name, num, text){
         this.util = new Util();
         this.player = this.createPlayer(src, name, num, text);
+        this.event_mouseOff_point();
     }
     createPlayer(src, name, num, text){
         let player = document.createElement('div');
@@ -21,14 +22,14 @@ export default class AudioPlayer{
         this.name = name;
         let btn_solo = this._create_button_solo(this.uniqueName);
         let btn_mute = this._create_button_mute(this.uniqueName);
-        this.valume = new Volume(this.uniqueName);
+        this.volume = new Volume(this.uniqueName);
         player.appendChild(playerName);
         player.appendChild(this.audio);
         player.appendChild(btn_solo);
         player.appendChild(btn_mute);
         player.appendChild(btn_rename);
         player.appendChild(btn_remove);
-        player.appendChild(this.valume.element);
+        player.appendChild(this.volume.element);
         return player;
     }
     _create_playerName(name){
@@ -83,5 +84,15 @@ export default class AudioPlayer{
         player.setAttribute('autoplay', true);
         //player.setAttribute('controls', true);
         player.setAttribute('loop', true);
+    }
+    event_mouseOff_point(){
+        let _func_up = () =>{
+                this.audio.volume = this.volume.val_volume;
+                console.log(this.volume.val_volume, this.audio.volume);
+        }
+        let func_up = () =>{
+            setTimeout(_func_up.bind(this), 10);
+        }
+        this.volume.point.addEventListener('mouseup', func_up.bind(this));
     }
 }
