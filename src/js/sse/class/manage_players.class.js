@@ -75,6 +75,37 @@ export default class Manage_player{
         }
         return [result, origin];
     }
+    mute_player(name){
+        for(let i = 0; i < this.players.length; i++){
+            if(this.players[i].uniqueName == name){
+                this.players[i].pause_player();
+            }
+        }
+    }
+    play_player(name){
+        for(let i = 0; i < this.players.length; i++){
+            if(this.players[i].uniqueName == name){
+                this.players[i].play_player();
+            }
+        }
+    }
+    mute_solo(name){
+        for(let i = 0; i < this.players.length; i++){
+            if(this.players[i].uniqueName != name){
+                this.players[i].pause_player();
+            }
+            else{
+                this.players[i].play_player();
+            }
+        }
+    }
+    play_solo(name){
+        for(let i = 0; i < this.players.length; i++){
+            if(this.players[i].uniqueName != name){
+                this.players[i].play_player();
+            }
+        }
+    }
     _create_input_text(){
         let input = document.createElement('input');
         input.setAttribute('type', 'text');

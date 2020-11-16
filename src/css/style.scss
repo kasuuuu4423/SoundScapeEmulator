@@ -71,6 +71,31 @@ body{
                 margin-bottom: 5.5px;
                 transform: translateY(-3px);
             }
+            .valume{
+                width: 100%;
+                height: 13px;
+                .bar_back{
+                    background: #fff;
+                    height: 5px;
+                    margin: 10px 5px;
+                    width: calc(100% - 10px);
+                    position: relative;
+                    .bar{
+                        height: 100%;
+                        width: 100%;
+                        background: rgb(239, 239, 239);
+                    }
+                    .point{
+                        width: 10px;
+                        height: 10px;
+                        position: absolute;
+                        top: 50%;
+                        left: 100%;
+                        transform: translate(-50%, -50%);
+                        background: #fff;
+                    }
+                }
+            }
         }
     }
 }

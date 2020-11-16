@@ -104,4 +104,34 @@ body {
   -webkit-transform: translateY(-3px);
           transform: translateY(-3px);
 }
+
+#sse #players .player .valume {
+  width: 100%;
+  height: 13px;
+}
+
+#sse #players .player .valume .bar_back {
+  background: #fff;
+  height: 5px;
+  margin: 10px 5px;
+  width: calc(100% - 10px);
+  position: relative;
+}
+
+#sse #players .player .valume .bar_back .bar {
+  height: 100%;
+  width: 100%;
+  background: #efefef;
+}
+
+#sse #players .player .valume .bar_back .point {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: #fff;
+}
 /*# sourceMappingURL=style.css.map */

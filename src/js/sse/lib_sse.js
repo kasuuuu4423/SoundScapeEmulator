@@ -49,6 +49,12 @@ export default class SSE{
             else if(class_target[0] === 'btn_rename'){
                 this.click_event_rename(e.target);
             }
+            else if(class_target[0] === 'btn_solo'){
+                this.click_event_solo(e.target);
+            }
+            else if(class_target[0] === 'btn_mute'){
+                this.click_event_mute(e.target);
+            }
         });
     }
     click_event_name(target){
@@ -82,6 +88,28 @@ export default class SSE{
         else{
             this.MP.change_input(data_name);
             target.classList.add('change');
+        }
+    }
+    click_event_solo(target){
+        let data_name = target.getAttribute('data-name');
+        if(target.classList.contains('solo')){
+            this.MP.play_solo(data_name);
+            target.classList.remove('solo');
+        }
+        else{
+            this.MP.mute_solo(data_name);
+            target.classList.add('solo');
+        }
+    }
+    click_event_mute(target){
+        let data_name = target.getAttribute('data-name');
+        if(target.classList.contains('mute')){
+            this.MP.play_player(data_name);
+            target.classList.remove('mute');
+        }
+        else{
+            this.MP.mute_player(data_name);
+            target.classList.add('mute');
         }
     }
 }
