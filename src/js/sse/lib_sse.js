@@ -8,6 +8,7 @@ const { ipcRenderer } = require('electron');
 
 export default class SSE{
     players;audioNames = [];csv;csvData;MN;MP;names;wrap;config;util;time;startTime;
+    sum_audio = 0;
     constructor(maxNum){
         this.wrap = this.addWrappers(document.getElementById('sse'));
         this.config = new Config();
@@ -52,6 +53,12 @@ export default class SSE{
             else if(class_target[0] === 'btn_preview'){
                 this.click_event_preview(e.target);
             }
+            else if(class_target[0] === 'btn_allPlay'){
+                this.click_event_allPlay(e.target);
+            }
+            else if(class_target[0] === 'btn_allStop'){
+                this.click_event_allStop(e.target);
+            }
         });
     }
     click_event_add(target){
@@ -61,14 +68,16 @@ export default class SSE{
         this.MP.addPlayer(name, text, extension);
         let now = this.time.now();
         let progTime = now - this.startTime;
-        //ipcRenderer.send('message', 'add,' + data_name + ',' + progTime);
+        this.sum_audio++;
+        ipcRenderer.send('message', 'add,' + name + ',' + progTime + ',' + this.sum_audio);
     }
     click_event_remove(target){
         let data_name = target.getAttribute('data-name');
         let name = this.MP.removePlayer(data_name);
         let now = this.time.now();
         let progTime = now - this.startTime;
-        //ipcRenderer.send('message', 'remove,' + name + ',' + progTime);
+        this.sum_audio--;
+        ipcRenderer.send('message', 'remove,' + name + ',' + progTime + ',' + this.sum_audio);
     }
     click_event_rename(target){
         let data_num = target.getAttribute('data-num');
@@ -91,5 +100,11 @@ export default class SSE{
         let extension = target.getAttribute('data-extension');
         let src = this.config.root + '/assets/audio/' + filename + '.' + extension;
         this.MN.preview.play(src);
+    }
+    click_event_allPlay(target){
+        this.MP.play_all();
+    }
+    click_event_allStop(target){
+        this.MP.mute_all();
     }
 }

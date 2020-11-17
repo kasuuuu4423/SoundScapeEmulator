@@ -4,11 +4,34 @@ import Util from './util.class.js';
 
 export default class Manage_player{
     players = [];wrap_players;config;util;
+    btn_allPlay;btn_allStop;
 
     constructor(){
         this.wrap_players = document.getElementById('players');
+        this.btn_allPlay = this._create_btn_allPlay();
+        this.btn_allStop = this._create_btn_allStop();
+        let wrap_btns = this._create_wrap_btns(this.btn_allPlay, this.btn_allStop);
+        this.wrap_players.appendChild(wrap_btns);
         this.config = new Config();
         this.util = new Util();
+    }
+    _create_wrap_btns(allPlay, allStop){
+        let wrap_btns = document.createElement('div');
+        wrap_btns.appendChild(allPlay);
+        wrap_btns.appendChild(allStop);
+        return wrap_btns;
+    }
+    _create_btn_allPlay(){
+        let btn_allPlay = document.createElement('button');
+        btn_allPlay.classList.add('btn_allPlay');
+        btn_allPlay.innerText = 'すべて再生';
+        return btn_allPlay;
+    }
+    _create_btn_allStop(){
+        let btn_allStop = document.createElement('button');
+        btn_allStop.classList.add('btn_allStop');
+        btn_allStop.innerText = 'すべて停止';
+        return btn_allStop;
     }
     addPlayer(name, text, extension){
         let src = this.config.root + '/assets/audio/' + name + '.' + extension;
@@ -54,6 +77,16 @@ export default class Manage_player{
             if(this.players[i].uniqueName == name){
                 this.players[i].play_player();
             }
+        }
+    }
+    mute_all(){
+        for(let i = 0; i < this.players.length; i++){
+            this.players[i].pause_player();
+        }
+    }
+    play_all(){
+        for(let i = 0; i < this.players.length; i++){
+            this.players[i].play_player();
         }
     }
     _create_input_text(){
