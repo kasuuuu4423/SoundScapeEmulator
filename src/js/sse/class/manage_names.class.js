@@ -18,15 +18,18 @@ export default class Manage_Names{
         this.crnt_num++;
     }
     change_text(name){
+        let result;
         for(let i = 0; i < this.names.length; i++){
             if(this.names[i].filename == name){
                 let input_value = this.names[i].get_inputValue();
+                result = input_value;
                 this.names[i].change_nameText(input_value);
                 this.names[i].tgl_text();
                 this.names[i].tgl_renameText();
                 this.names[i].remove_input();
             }
         }
+        return result;
     }
     change_input(name){
         for(let i = 0; i < this.names.length; i++){

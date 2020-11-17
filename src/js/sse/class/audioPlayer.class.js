@@ -2,32 +2,25 @@ import Util from './util.class.js';
 import Volume from './volume.class.js';
 
 export default class AudioPlayer{
-    player;audio;volume;
+    player;audio;volume;playerName;
     uniqueName;num;util;name;
 
-    constructor(src, name, num, text){
+    constructor(src, name, text){
         this.util = new Util();
-        this.player = this.createPlayer(src, name, num, text);
+        this.player = this.createPlayer(src, name, text);
         this.event_mouseOff_point();
     }
-    createPlayer(src, name, num, text){
+    createPlayer(src, name, text){
         let player = document.createElement('div');
         player.classList.add('player');
         this.uniqueName = this.util.getUniqueStr(name);
-        this.audio = this._create_player(src, this.uniqueName);
-        let playerName = this._create_playerName(text);
-        this.num = num;
+        this.audio = this._create_player(src, name, this.uniqueName);
+        this.playerName = this._create_playerName(text);
         let btn_remove = this._create_button_remove(this.uniqueName);
-        let btn_rename = this._create_button_rename(this.uniqueName, num);
         this.name = name;
-        let btn_solo = this._create_button_solo(this.uniqueName);
-        let btn_mute = this._create_button_mute(this.uniqueName);
         this.volume = new Volume(this.uniqueName);
-        player.appendChild(playerName);
+        player.appendChild(this.playerName);
         player.appendChild(this.audio);
-        player.appendChild(btn_solo);
-        player.appendChild(btn_mute);
-        player.appendChild(btn_rename);
         player.appendChild(btn_remove);
         player.appendChild(this.volume.element);
         return player;
@@ -38,10 +31,14 @@ export default class AudioPlayer{
         playerName.innerText = name;
         return playerName;
     }
-    _create_player(src, uniqueName){
+    change_playerName(name){
+        this.playerName.innerText = name;
+    }
+    _create_player(src, name, uniqueName){
         let audio = document.createElement('audio');
         audio.setAttribute('src', src);
         audio.setAttribute('data-name', uniqueName);
+        audio.setAttribute('data-filename', name);
         this.format_playerSetting(audio);
         return audio;
     }

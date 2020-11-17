@@ -41,7 +41,7 @@ export default class SSE{
         document.addEventListener('click', (e)=>{
             let class_target = e.target.classList;
             if(class_target[0] === 'btn_add'){
-                this.click_event_name(e.target);
+                this.click_event_add(e.target);
             }
             else if(class_target[0] === 'btn_remove'){
                 this.click_event_remove(e.target);
@@ -54,35 +54,35 @@ export default class SSE{
             }
         });
     }
-    click_event_name(target){
-        let data_name = target.getAttribute('data-name');
-        let data_num = target.getAttribute('data-num');
-        let text = target.innerHTML;
+    click_event_add(target){
+        let name = target.getAttribute('data-name');
         let extension = target.getAttribute('data-extension');
-        this.MP.addPlayer(data_name, data_num, text, extension);
+        let text = target.parentNode.getElementsByTagName('span')[0].innerText;
+        this.MP.addPlayer(name, text, extension);
         let now = this.time.now();
         let progTime = now - this.startTime;
-        ipcRenderer.send('message', 'add,' + data_name + ',' + progTime);
+        //ipcRenderer.send('message', 'add,' + data_name + ',' + progTime);
     }
     click_event_remove(target){
         let data_name = target.getAttribute('data-name');
         let name = this.MP.removePlayer(data_name);
         let now = this.time.now();
         let progTime = now - this.startTime;
-        ipcRenderer.send('message', 'remove,' + name + ',' + progTime);
+        //ipcRenderer.send('message', 'remove,' + name + ',' + progTime);
     }
     click_event_rename(target){
         let data_num = target.getAttribute('data-num');
-        let data_name = target.getAttribute('data-name');
+        let name = target.getAttribute('data-name');
         if(target.classList.contains('change')){
-            this.MN.change_text(data_name);
+            let input_value = this.MN.change_text(name);
+            this.MP.change_text(name, input_value);
             target.classList.remove('change');
             let now = this.time.now();
             let progTime = now - this.startTime;
             //ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
         }
         else{
-            this.MN.change_input(data_name);
+            this.MN.change_input(name);
             target.classList.add('change');
         }
     }

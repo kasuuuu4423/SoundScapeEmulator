@@ -10,9 +10,9 @@ export default class Manage_player{
         this.config = new Config();
         this.util = new Util();
     }
-    addPlayer(name, num, text, extension){
+    addPlayer(name, text, extension){
         let src = this.config.root + '/assets/audio/' + name + '.' + extension;
-        let player = new AudioPlayer(src, name, num, text);
+        let player = new AudioPlayer(src, name, text);
         // this.players.push([player.player, player.uniqueName, player.num]);
         this.players.push(player);
         this.wrap_players.appendChild(player.player);
@@ -35,45 +35,12 @@ export default class Manage_player{
             }
         }
     }
-    change_input(name){
+    change_text(name, text){
         for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName == name){
-                let text = this.players[i].player.getElementsByClassName('playName')[0];
-                text.style.display = 'none';
-                let btn_change = this.players[i].player.getElementsByClassName('btn_rename')[0];
-                btn_change.innerText = '完了';
-                let input = this._create_input_text();
-                input.value = text.innerHTML;
-                console.log(this.players[i].player, text.innerHTML);
-                this.players[i].player.insertBefore(input, this.players[i].player.firstChild);
-                input.focus();
-                input.select();
+            if(this.players[i].name == name){
+                this.players[i].change_playerName(text);
             }
         }
-    }
-    change_text(name, num){
-        let result = "";
-        let origin = "";
-        for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName == name){
-                let text = this.players[i].player.getElementsByClassName('playName')[0];
-                let input = this.players[i].player.getElementsByClassName('playName_input')[0];
-                text.innerText = input.value;
-                result = input.value;
-                for(let j = 0; j < this.players.length; j++){
-                    if(this.players[j].num == num){
-                        let item_text = this.players[j].player.getElementsByClassName('playName')[0];
-                        item_text.innerText = input.value;
-                        origin = this.players[j].name;
-                    }
-                }
-                text.style.display = 'block';
-                this.players[i].player.removeChild(input);
-                let btn_change = this.players[i].player.getElementsByClassName('btn_rename')[0];
-                btn_change.innerText = '名前を変える'
-            }
-        }
-        return [result, origin];
     }
     mute_player(name){
         for(let i = 0; i < this.players.length; i++){
@@ -85,23 +52,6 @@ export default class Manage_player{
     play_player(name){
         for(let i = 0; i < this.players.length; i++){
             if(this.players[i].uniqueName == name){
-                this.players[i].play_player();
-            }
-        }
-    }
-    mute_solo(name){
-        for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName != name){
-                this.players[i].pause_player();
-            }
-            else{
-                this.players[i].play_player();
-            }
-        }
-    }
-    play_solo(name){
-        for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName != name){
                 this.players[i].play_player();
             }
         }

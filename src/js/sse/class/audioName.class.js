@@ -14,7 +14,7 @@ export default class AudioName{
         this.span = this._create_span(innertext);
         this.btn_rename = this._create_btn_rename(name, num);
         this.btn_rename.setAttribute('data-change', 'false');
-        this.btn_preview = this._create_btn_preview(name);
+        this.btn_preview = this._create_btn_preview(name, extension);
         let btn_add = this._create_btn_add(name, extension);
         this.name.appendChild(this.span);
         this.name.appendChild(this.btn_rename);
@@ -46,7 +46,7 @@ export default class AudioName{
     }
     _create_btn_add(name, extension){
         let btn_add = document.createElement('button');
-        btn_add.classList.add('btn');
+        btn_add.classList.add('btn_add');
         btn_add.setAttribute('data-name', name);
         btn_add.setAttribute('data-extension', extension);
         btn_add.innerText = '追加';
