@@ -78,12 +78,11 @@ export default class SSE{
         let data_num = target.getAttribute('data-num');
         let data_name = target.getAttribute('data-name');
         if(target.classList.contains('change')){
-            let text = this.MP.change_text(data_name, data_num);
-            this.MN.change_text(data_num, text[0]);
+            this.MN.change_text(data_name);
             target.classList.remove('change');
             let now = this.time.now();
             let progTime = now - this.startTime;
-            ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
+            //ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
         }
         else{
             this.MN.change_input(data_name);
