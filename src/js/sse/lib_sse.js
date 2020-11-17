@@ -75,12 +75,11 @@ export default class SSE{
         let data_num = target.getAttribute('data-num');
         let data_name = target.getAttribute('data-name');
         if(target.classList.contains('change')){
-            let text = this.MP.change_text(data_name, data_num);
-            this.MN.change_text(data_num, text[0]);
+            this.MN.change_text(data_name);
             target.classList.remove('change');
             let now = this.time.now();
             let progTime = now - this.startTime;
-            ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
+            //ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
         }
         else{
             this.MN.change_input(data_name);
@@ -93,26 +92,4 @@ export default class SSE{
         let src = this.config.root + '/assets/audio/' + filename + '.' + extension;
         this.MN.preview.play(src);
     }
-    // click_event_solo(target){
-    //     let data_name = target.getAttribute('data-name');
-    //     if(target.classList.contains('solo')){
-    //         this.MP.play_solo(data_name);
-    //         target.classList.remove('solo');
-    //     }
-    //     else{
-    //         this.MP.mute_solo(data_name);
-    //         target.classList.add('solo');
-    //     }
-    // }
-    // click_event_mute(target){
-    //     let data_name = target.getAttribute('data-name');
-    //     if(target.classList.contains('mute')){
-    //         this.MP.play_player(data_name);
-    //         target.classList.remove('mute');
-    //     }
-    //     else{
-    //         this.MP.mute_player(data_name);
-    //         target.classList.add('mute');
-    //     }
-    // }
 }
