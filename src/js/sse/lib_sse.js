@@ -89,26 +89,4 @@ export default class SSE{
             target.classList.add('change');
         }
     }
-    click_event_solo(target){
-        let data_name = target.getAttribute('data-name');
-        if(target.classList.contains('solo')){
-            this.MP.play_solo(data_name);
-            target.classList.remove('solo');
-        }
-        else{
-            this.MP.mute_solo(data_name);
-            target.classList.add('solo');
-        }
-    }
-    click_event_mute(target){
-        let data_name = target.getAttribute('data-name');
-        if(target.classList.contains('mute')){
-            this.MP.play_player(data_name);
-            target.classList.remove('mute');
-        }
-        else{
-            this.MP.mute_player(data_name);
-            target.classList.add('mute');
-        }
-    }
 }

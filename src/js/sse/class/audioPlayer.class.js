@@ -45,34 +45,12 @@ export default class AudioPlayer{
         this.format_playerSetting(audio);
         return audio;
     }
-    _create_button_rename(uniqueName, num){
-        let btn_remove = document.createElement('button');
-        btn_remove.innerText = '名前を変える';
-        btn_remove.classList.add('btn_rename');
-        btn_remove.setAttribute('data-num', num);
-        btn_remove.setAttribute('data-name', uniqueName);
-        return btn_remove;
-    }
     _create_button_remove(uniqueName){
         let btn_remove = document.createElement('button');
         btn_remove.innerText = '削除';
         btn_remove.classList.add('btn_remove');
         btn_remove.setAttribute('data-name', uniqueName);
         return btn_remove;
-    }
-    _create_button_solo(uniqueName){
-        let btn_solo = document.createElement('button');
-        btn_solo.innerText = 'SOLO';
-        btn_solo.classList.add('btn_solo');
-        btn_solo.setAttribute('data-name', uniqueName);
-        return btn_solo;
-    }
-    _create_button_mute(uniqueName){
-        let btn_mute = document.createElement('button');
-        btn_mute.innerText = 'MUTE';
-        btn_mute.classList.add('btn_mute');
-        btn_mute.setAttribute('data-name', uniqueName);
-        return btn_mute;
     }
     pause_player(){
         this.audio.pause();
