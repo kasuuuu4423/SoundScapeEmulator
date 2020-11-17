@@ -9,19 +9,12 @@ export default class AudioName{
         this.name.setAttribute('data-name', name);
         this.name.setAttribute('data-num', num);
         this.name.setAttribute('data-extension', extension);
-<<<<<<< HEAD
-        let span = document.createElement('span');
-        span.innerText = '音' + num;
-        let btn_rename = this._create_btn_rename(name, num);
-        let btn_preview = this._create_btn_preview(name, extension);
-=======
 
         let innertext = '音' + num;
         this.span = this._create_span(innertext);
         this.btn_rename = this._create_btn_rename(name, num);
         this.btn_rename.setAttribute('data-change', 'false');
         this.btn_preview = this._create_btn_preview(name);
->>>>>>> 508b13564d0e6c2abd5581628065327ffcc608d8
         let btn_add = this._create_btn_add(name, extension);
         this.name.appendChild(this.span);
         this.name.appendChild(this.btn_rename);
