@@ -98,8 +98,19 @@ export default class SSE{
     click_event_preview(target){
         let filename = target.getAttribute('data-name');
         let extension = target.getAttribute('data-extension');
-        let src = this.config.root + '/assets/audio/' + filename + '.' + extension;
-        this.MN.preview.play(src);
+        let status_play = target.getAttribute('data-play');
+        if(status_play == 'true'){
+            target.innerText = '再生';
+            target.setAttribute('data-play', false);
+            this.MN.preview.stop();
+        }
+        else{
+            target.innerText = '停止';
+            target.setAttribute('data-play', true);
+            let src = this.config.root + '/assets/audio/' + filename + '.' + extension;
+            this.MN.change_text_play(filename);
+            this.MN.preview.play(src);
+        }
     }
     click_event_allPlay(target){
         this.MP.play_all();

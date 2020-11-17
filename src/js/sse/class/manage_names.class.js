@@ -40,6 +40,15 @@ export default class Manage_Names{
             }
         }
     }
+    change_text_play(filename){
+        for(let i = 0; i < this.names.length; i++){
+            let data_play = this.names[i].btn_preview.getAttribute('data-play');
+            if(this.names[i].filename != filename && data_play == 'true'){
+                this.names[i].btn_preview.setAttribute('data-play', false);
+                this.names[i].btn_preview.innerText = '再生';
+            }
+        }
+    }
     preview_start(filename){
         this.preview.play(filename);
     }

@@ -17,6 +17,7 @@ export default class Manage_player{
     }
     _create_wrap_btns(allPlay, allStop){
         let wrap_btns = document.createElement('div');
+        wrap_btns.classList.add('wrap_btns');
         wrap_btns.appendChild(allPlay);
         wrap_btns.appendChild(allStop);
         return wrap_btns;

@@ -41,6 +41,7 @@ export default class AudioName{
         btn_preview.classList.add('btn_preview');
         btn_preview.setAttribute('data-name', name);
         btn_preview.setAttribute('data-extension', extension);
+        btn_preview.setAttribute('data-play', false);
         btn_preview.innerText = '再生';
         return btn_preview;
     }
