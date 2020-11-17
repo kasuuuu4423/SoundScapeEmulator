@@ -1,12 +1,15 @@
 import AudioNames from "./audioName.class.js";
+import PreviewAudio from './previewAudio.class.js';
 
 export default class Manage_Names{
     names = [];
     AN;
     wrap_names;
     crnt_num = 0;
+    preview;
     constructor(){
         this.wrap_names = document.getElementById('names');
+        this.preview = new PreviewAudio();
     }
     addName(name, extension){
         let obj_name = new AudioNames(name, this.crnt_num, extension);
@@ -28,5 +31,11 @@ export default class Manage_Names{
                 this.name[i].name;
             }
         }
+    }
+    preview_start(filename){
+        this.preview.play(filename);
+    }
+    preview_stop(){
+        this.preview.stop();
     }
 }
