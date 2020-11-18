@@ -62,12 +62,12 @@ export default class AudioPlayer{
     }
     event_mouseOff_point(){
         let _func_up = () =>{
-                this.audio.volume = this.volume.val_volume;
-                console.log(this.volume.val_volume, this.audio.volume);
+            this.audio.volume = this.volume.val_volume;
         }
         let func_up = () =>{
             setTimeout(_func_up.bind(this), 10);
+            document.removeEventListener('mouseup', func_up.bind(this));
         }
-        this.volume.point.addEventListener('mouseup', func_up.bind(this));
+        document.addEventListener('mouseup', func_up.bind(this));
     }
 }

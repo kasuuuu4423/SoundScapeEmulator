@@ -30,14 +30,21 @@ export default class Volume{
         let point = document.createElement('div');
         point.classList.add('point');
         point.onmousedown = function(event) {
-            moveAt(event.pageX, event.pageY);
             let bar_back = event.target.parentNode;
             let left = bar_back.getBoundingClientRect().left;
-            let right = left + bar_back.clientWidth;
+            let right = bar_back.getBoundingClientRect().right;
             let width = bar_back.clientWidth;
+            moveAt(event.pageX, event.pageY);
             
             function moveAt(pageX, pageY) {
-                point.style.left = (pageX - point.parentNode.getBoundingClientRect().left ) + 'px';
+                let px = (pageX - point.parentNode.getBoundingClientRect().left );
+                if(px >= width){
+                    px = width;
+                }
+                else if(px <= 0){
+                    px = 0;
+                }
+                point.style.left = px + 'px';
                 document.getElementsByTagName('body')[0].style.cursor = 'grabbing';
             }
             
@@ -46,7 +53,7 @@ export default class Volume{
             }
             document.addEventListener('mousemove', onMouseMove);
             
-            point.onmouseup = function(){
+            document.onmouseup = function(){
                 let tmp_vol = point.style.left;
                 tmp_vol = tmp_vol.replace('px', '')/width;
                 this.val_volume = tmp_vol;
@@ -55,7 +62,7 @@ export default class Volume{
                 point.onmouseup = null;
             }.bind(this);
         }.bind(this);
-        window.ondragstart = function() {
+        window.ondragstart = function(){
             return false;
         };
         return point;
