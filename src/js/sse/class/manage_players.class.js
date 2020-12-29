@@ -4,15 +4,39 @@ import Util from './util.class.js';
 
 export default class Manage_player{
     players = [];wrap_players;config;util;
+    btn_allPlay;btn_allStop;
 
     constructor(){
         this.wrap_players = document.getElementById('players');
+        this.btn_allPlay = this._create_btn_allPlay();
+        this.btn_allStop = this._create_btn_allStop();
+        let wrap_btns = this._create_wrap_btns(this.btn_allPlay, this.btn_allStop);
+        this.wrap_players.appendChild(wrap_btns);
         this.config = new Config();
         this.util = new Util();
     }
-    addPlayer(name, num, text, extension){
+    _create_wrap_btns(allPlay, allStop){
+        let wrap_btns = document.createElement('div');
+        wrap_btns.classList.add('wrap_btns');
+        wrap_btns.appendChild(allPlay);
+        wrap_btns.appendChild(allStop);
+        return wrap_btns;
+    }
+    _create_btn_allPlay(){
+        let btn_allPlay = document.createElement('button');
+        btn_allPlay.classList.add('btn_allPlay');
+        btn_allPlay.innerText = 'すべて再生';
+        return btn_allPlay;
+    }
+    _create_btn_allStop(){
+        let btn_allStop = document.createElement('button');
+        btn_allStop.classList.add('btn_allStop');
+        btn_allStop.innerText = 'すべて停止';
+        return btn_allStop;
+    }
+    addPlayer(name, text, extension){
         let src = this.config.root + '/assets/audio/' + name + '.' + extension;
-        let player = new AudioPlayer(src, name, num, text);
+        let player = new AudioPlayer(src, name, text);
         // this.players.push([player.player, player.uniqueName, player.num]);
         this.players.push(player);
         this.wrap_players.appendChild(player.player);
@@ -35,45 +59,12 @@ export default class Manage_player{
             }
         }
     }
-    change_input(name){
+    change_text(name, text){
         for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName == name){
-                let text = this.players[i].player.getElementsByClassName('playName')[0];
-                text.style.display = 'none';
-                let btn_change = this.players[i].player.getElementsByClassName('btn_rename')[0];
-                btn_change.innerText = '完了';
-                let input = this._create_input_text();
-                input.value = text.innerHTML;
-                console.log(this.players[i].player, text.innerHTML);
-                this.players[i].player.insertBefore(input, this.players[i].player.firstChild);
-                input.focus();
-                input.select();
+            if(this.players[i].name == name){
+                this.players[i].change_playerName(text);
             }
         }
-    }
-    change_text(name, num){
-        let result = "";
-        let origin = "";
-        for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName == name){
-                let text = this.players[i].player.getElementsByClassName('playName')[0];
-                let input = this.players[i].player.getElementsByClassName('playName_input')[0];
-                text.innerText = input.value;
-                result = input.value;
-                for(let j = 0; j < this.players.length; j++){
-                    if(this.players[j].num == num){
-                        let item_text = this.players[j].player.getElementsByClassName('playName')[0];
-                        item_text.innerText = input.value;
-                        origin = this.players[j].name;
-                    }
-                }
-                text.style.display = 'block';
-                this.players[i].player.removeChild(input);
-                let btn_change = this.players[i].player.getElementsByClassName('btn_rename')[0];
-                btn_change.innerText = '名前を変える'
-            }
-        }
-        return [result, origin];
     }
     mute_player(name){
         for(let i = 0; i < this.players.length; i++){
@@ -89,21 +80,14 @@ export default class Manage_player{
             }
         }
     }
-    mute_solo(name){
+    mute_all(){
         for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName != name){
-                this.players[i].pause_player();
-            }
-            else{
-                this.players[i].play_player();
-            }
+            this.players[i].pause_player();
         }
     }
-    play_solo(name){
+    play_all(){
         for(let i = 0; i < this.players.length; i++){
-            if(this.players[i].uniqueName != name){
-                this.players[i].play_player();
-            }
+            this.players[i].play_player();
         }
     }
     _create_input_text(){
