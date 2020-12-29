@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+// const { ipcRenderer } = require('electron');
 
 export default class Config{
     root;
@@ -8,11 +8,11 @@ export default class Config{
         _l = this.remove_fileName(_l, 'index.html');
         this.root = _l + '/js/sse';
 
-        ipcRenderer.send('status', 'ready');
-        ipcRenderer.on('root', (e, arg) => {
-            this.appRoot = this.remove_fileName(arg);
-            //let dir_root = this.remove_fileName(arg);
-        });
+        // ipcRenderer.send('status', 'ready');
+        // ipcRenderer.on('root', (e, arg) => {
+        //     this.appRoot = this.remove_fileName(arg);
+        //     //let dir_root = this.remove_fileName(arg);
+        // });
     }
     remove_fileName(directory){
         let dir = directory.split('/');
