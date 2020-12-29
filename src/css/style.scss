@@ -4,10 +4,11 @@ body{
 #sse{
     display: flex;
     $padding: 5px;
+    flex-wrap: wrap;
     width: calc(100% - #{$padding} * 2);
     height: calc(100vh - #{$padding} * 2);
     #names{
-        width: 50%;
+        width: calc(50% - #{$padding} * 2);
         height: 100%;
         overflow-y: scroll;
         display: flex;
@@ -51,7 +52,7 @@ body{
         }
     }
     #players{
-        width: 50%;
+        width: calc(50% - #{$padding} * 2);
         height: 100%;
         overflow-y: scroll;
         display: flex;
@@ -131,5 +132,10 @@ body{
                 }
             }
         }
+    }
+    .wrap_timekeep{
+        width: 100%;
+        position: fixed;
+        bottom: 0;
     }
 }

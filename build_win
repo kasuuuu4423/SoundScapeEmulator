@@ -1,6 +1,7 @@
 const builder = require('electron-builder');
 
 builder.build({
+    platform: 'win',
     config: {
         'appId': 'local.test.app1',
         'win':{

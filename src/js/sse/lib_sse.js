@@ -4,10 +4,11 @@ import Manage_players from "./class/manage_players.class.js";
 import Config from "./config.js";
 import Util from './class/util.class.js';
 import Time from './class/time.class.js';
+import TimeKeep from './class/timeKeep.class.js';
 const { ipcRenderer } = require('electron');
 
 export default class SSE{
-    players;audioNames = [];csv;csvData;MN;MP;names;wrap;config;util;time;startTime;
+    players;audioNames = [];csv;csvData;MN;MP;names;wrap;config;util;time;startTime;timeKeep;
     sum_audio = 0;
     constructor(maxNum){
         this.wrap = this.addWrappers(document.getElementById('sse'));
@@ -17,6 +18,7 @@ export default class SSE{
         this.MP = new Manage_players();
         this.csv = new LoadCSV(this.config.root + '/assets/list.csv');
         this.time = new Time();
+        this.timeKeep = new TimeKeep();
         this.csv_event(this.csv, maxNum);
         this.click_event();
         this.startTime = this.time.now();
@@ -59,6 +61,12 @@ export default class SSE{
             else if(class_target[0] === 'btn_allStop'){
                 this.click_event_allStop(e.target);
             }
+            else if(class_target[0] === 'btn_start'){
+                this.click_event_start(e.target);
+            }
+            else if(class_target[0] === 'btn_end'){
+                this.click_event_end(e.target);
+            }
         });
     }
     click_event_add(target){
@@ -69,7 +77,7 @@ export default class SSE{
         let now = this.time.now();
         let progTime = now - this.startTime;
         this.sum_audio++;
-        ipcRenderer.send('message', 'add,' + name + ',' + progTime + ',' + this.sum_audio);
+        ipcRenderer.send('addremove', 'add,' + name + ',' + progTime + ',' + this.sum_audio);
     }
     click_event_remove(target){
         let data_name = target.getAttribute('data-name');
@@ -77,7 +85,7 @@ export default class SSE{
         let now = this.time.now();
         let progTime = now - this.startTime;
         this.sum_audio--;
-        ipcRenderer.send('message', 'remove,' + name + ',' + progTime + ',' + this.sum_audio);
+        ipcRenderer.send('addremove', 'remove,' + name + ',' + progTime + ',' + this.sum_audio);
     }
     click_event_rename(target){
         let data_num = target.getAttribute('data-num');
@@ -88,7 +96,7 @@ export default class SSE{
             target.classList.remove('change');
             let now = this.time.now();
             let progTime = now - this.startTime;
-            //ipcRenderer.send('message', 'rename,' + text[1] + ',' + progTime + ',' + text[0]);
+            ipcRenderer.send('rename', 'rename,' + name + ',' + progTime + ',' + input_value);
         }
         else{
             this.MN.change_input(name);
@@ -117,5 +125,13 @@ export default class SSE{
     }
     click_event_allStop(target){
         this.MP.mute_all();
+    }
+    click_event_start(target){
+        let now = this.timeKeep.start();
+        ipcRenderer.send('addremove', 'start,,' + now + ',');
+    }
+    click_event_end(target){
+        let now = this.timeKeep.end();
+        ipcRenderer.send('addremove', 'end,,' + now + ',');
     }
 }

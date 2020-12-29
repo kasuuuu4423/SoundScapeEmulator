@@ -56,7 +56,7 @@ export default class AudioPlayer{
         this.audio.play();
     }
     format_playerSetting(player){
-        player.setAttribute('autoplay', true);
+        //player.setAttribute('autoplay', true);
         //player.setAttribute('controls', true);
         player.setAttribute('loop', true);
     }

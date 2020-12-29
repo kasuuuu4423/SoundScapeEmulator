@@ -73,7 +73,7 @@ const create_audioList = () =>{
     }
 }
 
-create_audioList();
+//create_audioList();
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -122,8 +122,8 @@ app.on('activate', () => {
     }
 });
 
-let flg_writeCSV = true;
-ipcMain.on('message', (event, arg) => {
+let flg_writeCSV_addremove = true;
+ipcMain.on('addremove', (event, arg) => {
     let dir = "";
     if(is_mac){
         dir = __dirname;
@@ -131,12 +131,32 @@ ipcMain.on('message', (event, arg) => {
     }
     console.log(arg);
     //let action = arg.split(',')[0];
-    if(flg_writeCSV){
+    if(flg_writeCSV_addremove){
         fs.writeFileSync(dir + "/action.csv", arg + '\n');
-        flg_writeCSV = false;
+        flg_writeCSV_addremove = false;
     }
     else{
         fs.appendFile(dir + "/action.csv", arg + '\n', (err) => {
+            if (err) throw err;
+        });
+    }
+});
+
+let flg_writeCSV_rename = true;
+ipcMain.on('rename', (event, arg) => {
+    let dir = __dirname;
+    if(is_mac){
+        dir = __dirname;
+        dir = remove_fileName(dir);
+    }
+    console.log(arg);
+    //let action = arg.split(',')[0];
+    if(flg_writeCSV_rename){
+        fs.writeFileSync(dir + "/rename.csv", arg + '\n');
+        flg_writeCSV_rename = false;
+    }
+    else{
+        fs.appendFile(dir + "/rename.csv", arg + '\n', (err) => {
             if (err) throw err;
         });
     }
