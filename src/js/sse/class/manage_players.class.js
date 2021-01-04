@@ -39,6 +39,10 @@ export default class Manage_player{
         let src = this.config.root + '/assets/audio/' + name + '.' + extension;
         let player = new AudioPlayer(src, name, text);
         // this.players.push([player.player, player.uniqueName, player.num]);
+        let status = this.wrap_btns.getAttribute('data-state');
+        if(status == 'true'){
+            player.autoPlay();
+        }
         this.players.push(player);
         this.wrap_players.appendChild(player.player);
     }

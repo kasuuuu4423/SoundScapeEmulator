@@ -70,4 +70,7 @@ export default class AudioPlayer{
         }
         document.addEventListener('mouseup', func_up.bind(this));
     }
+    autoPlay(){
+        this.audio.setAttribute('autoplay', true);
+    }
 }
