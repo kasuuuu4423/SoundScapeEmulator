@@ -4,19 +4,20 @@ import Util from './util.class.js';
 
 export default class Manage_player{
     players = [];wrap_players;config;util;
-    btn_allPlay;btn_allStop;
+    btn_allPlay;btn_allStop;wrap_btns;
 
     constructor(){
         this.wrap_players = document.getElementById('players');
         this.btn_allPlay = this._create_btn_allPlay();
         this.btn_allStop = this._create_btn_allStop();
-        let wrap_btns = this._create_wrap_btns(this.btn_allPlay, this.btn_allStop);
-        this.wrap_players.appendChild(wrap_btns);
+        this.wrap_btns = this._create_wrap_btns(this.btn_allPlay, this.btn_allStop);
+        this.wrap_players.appendChild(this.wrap_btns);
         this.config = new Config();
         this.util = new Util();
     }
     _create_wrap_btns(allPlay, allStop){
         let wrap_btns = document.createElement('div');
+        wrap_btns.setAttribute('data-state', 'false');
         wrap_btns.classList.add('wrap_btns');
         wrap_btns.appendChild(allPlay);
         wrap_btns.appendChild(allStop);
@@ -95,5 +96,13 @@ export default class Manage_player{
         input.setAttribute('type', 'text');
         input.classList.add('playName_input');
         return input;
+    }
+    active_playState(){
+        this.wrap_btns.setAttribute('data-state', 'true');
+        this.wrap_btns.classList.add('play');
+    }
+    passive_playState(){
+        this.wrap_btns.setAttribute('data-state', 'false');
+        this.wrap_btns.classList.remove('play');
     }
 }

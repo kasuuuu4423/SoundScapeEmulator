@@ -122,9 +122,11 @@ export default class SSE{
     }
     click_event_allPlay(target){
         this.MP.play_all();
+        this.MP.active_playState();
     }
     click_event_allStop(target){
         this.MP.mute_all();
+        this.MP.passive_playState();
     }
     click_event_start(target){
         // let now = this.timeKeep.start();

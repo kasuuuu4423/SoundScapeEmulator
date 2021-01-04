@@ -97,6 +97,22 @@ body {
   opacity: .8;
 }
 
+#sse #players .wrap_btns.play .btn_allPlay {
+  opacity: 1;
+}
+
+#sse #players .wrap_btns.play .btn_allStop {
+  opacity: .8;
+}
+
+#sse #players .wrap_btns:not(.play) .btn_allPlay {
+  opacity: .8;
+}
+
+#sse #players .wrap_btns:not(.play) .btn_allStop {
+  opacity: 1;
+}
+
 #sse #players .player {
   height: fit-content;
   width: calc(33% - 4px);
